@@ -22,3 +22,6 @@ const carShema = new mongoose.Schema<CarTypes>({
     type: mongoose.Schema.Types.String,
   },
 });
+
+const Car = mongoose.model("Car", carShema);
+export default Car;
