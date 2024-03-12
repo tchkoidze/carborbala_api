@@ -3,3 +3,5 @@ import express from "express";
 
 const carRouter = express.Router();
 carRouter.get("/cars", getAllCars);
+
+export default carRouter;
