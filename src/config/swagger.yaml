@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  title: CarBorbala
+  description: CarBorbala web app API
+  version: 0.1.9
+
+servers:
+  - url: http://localhost:3333/api
+    description: production server
+  - url: http://localhost:3333/api
+    description: local server
+paths:
+  /cars:
+    get:
+      tags:
+        - Cars
+      requestBody:
+        description: get cars list
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                model:
+                  type: string
+                type:
+                  type: string
+                price:
+                  type: string
+                img: type:string
+      responses:
+        "200":
+          description: cars returned successfully
