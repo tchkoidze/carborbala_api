@@ -34,7 +34,8 @@ paths:
                   type: string
   /register:
     get:
-      tags: Auth
+      tags:
+        - Auth
       requestBody:
         description: user registration request
         required: true
