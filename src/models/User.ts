@@ -21,3 +21,6 @@ const userShema = new mongoose.Schema<UserType>({
     default: uuid,
   },
 });
+
+const User = mongoose.model("User", userShema);
+export default User;
