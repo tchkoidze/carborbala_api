@@ -2,11 +2,23 @@ import { Request, Response } from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import addUserSchema from "schemas/add-user-shema.js";
 
 export const createUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  //const { name, email, password } = req.body;
+  const { body } = req;
 
   try {
+    const validator = await addUserSchema(body);
+
+    const { value, error } = validator.validate(body);
+
+    if (error) {
+      return res.status(4001).json(error.details);
+    }
+
+    const { name, email, password } = value;
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
