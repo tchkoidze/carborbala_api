@@ -33,7 +33,7 @@ paths:
                 img:
                   type: string
   /register:
-    get:
+    post:
       tags:
         - Auth
       requestBody:
