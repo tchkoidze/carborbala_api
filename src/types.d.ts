@@ -12,3 +12,9 @@ interface UserType {
   password: string;
   id: string;
 }
+
+interface NewUser {
+  name: string;
+  email: string;
+  password: string;
+}
