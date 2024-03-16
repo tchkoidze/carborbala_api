@@ -3,6 +3,8 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import addUserSchema from "schemas/add-user-shema.js";
+import { sendVerificationLink } from "mail/edge.js";
+import { link } from "joi";
 
 export const createUser = async (req: Request, res: Response) => {
   //const { name, email, password } = req.body;
@@ -27,7 +29,15 @@ export const createUser = async (req: Request, res: Response) => {
       email,
       password: hashedPassword,
     });
+
     newUser.save();
+
+    await sendVerificationLink(
+      email,
+      name,
+      "https://www.passportjs.org/packages/"
+    );
+
     return res.status(200).json(newUser);
   } catch (error) {
     return res.status(401).json(error);
