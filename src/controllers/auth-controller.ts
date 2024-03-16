@@ -2,9 +2,8 @@ import { Request, Response } from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import addUserSchema from "schemas/add-user-shema.js";
-import { sendVerificationLink } from "mail/edge.js";
-import { link } from "joi";
+import addUserSchema from "../schemas/add-user-shema.js";
+import { sendVerificationLink } from "../mail/edge.js";
 
 export const createUser = async (req: Request, res: Response) => {
   //const { name, email, password } = req.body;

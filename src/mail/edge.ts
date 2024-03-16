@@ -1,6 +1,6 @@
 import { Edge } from "edge.js";
 import path, { join } from "path";
-import gmailTransport from "./index";
+import gmailTransport from "./index.js";
 import dotenv from "dotenv";
 
 dotenv.config();
