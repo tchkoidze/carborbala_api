@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import addUserSchema from "../schemas/add-user-shema.js";
 import { sendVerificationLink } from "../mail/edge.js";
+import loginSchema from "../schemas/login-schema.js";
+import { validate } from "uuid";
 
 export const createUser = async (req: Request, res: Response) => {
   //const { name, email, password } = req.body;
@@ -44,8 +46,18 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  //const { email, password } = req.body;
+  const { body } = req;
   try {
+    const validator = await loginSchema(body);
+    const { value, error } = validator.validate(body);
+
+    if (error) {
+      return res.status(4001).json(error.details);
+    }
+
+    const { email, password } = value;
+
     const user = await User.findOne({ email }, { _id: 0, _v: 0 }).select(
       "+password"
     );
