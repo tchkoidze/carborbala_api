@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import addUserSchema from "../schemas/add-user-shema.js";
 import { sendVerificationLink } from "../mail/edge.js";
 import loginSchema from "../schemas/login-schema.js";
+import crypto from "crypto";
+import Verification from "../models/Verification.js";
 
 export const createUser = async (req: Request, res: Response) => {
   //const { name, email, password } = req.body;
@@ -32,9 +34,13 @@ export const createUser = async (req: Request, res: Response) => {
 
     newUser.save();
 
+    const verificationHash = crypto.randomBytes(48).toString("hex");
+    await Verification.create({ hash: verificationHash, email });
+
     await sendVerificationLink(
       email,
       name,
+      verificationHash,
       "https://www.passportjs.org/packages/"
     );
 

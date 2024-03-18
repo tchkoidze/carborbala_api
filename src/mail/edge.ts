@@ -23,6 +23,7 @@ const send = (to: string, subject: string, html: any) => {
 export const sendVerificationLink = async (
   to: string,
   name: string,
+  hash: string,
   link: string
 ) => {
   const html = edge.renderSync("verify", {
