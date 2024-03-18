@@ -18,3 +18,8 @@ interface NewUser {
   email: string;
   password: string;
 }
+
+interface IVerification {
+  hash: string;
+  email: string;
+}
