@@ -15,6 +15,7 @@ const userShema = new mongoose.Schema<UserType>({
     type: mongoose.Schema.Types.String,
     required: true,
   },
+  verify: { type: mongoose.Schema.Types.Boolean, required: true },
   id: {
     type: mongoose.Schema.Types.String,
     required: true,

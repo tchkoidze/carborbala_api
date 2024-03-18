@@ -30,6 +30,7 @@ export const createUser = async (req: Request, res: Response) => {
       name,
       email,
       password: hashedPassword,
+      verify: false,
     });
 
     newUser.save();

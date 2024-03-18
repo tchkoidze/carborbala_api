@@ -10,6 +10,7 @@ interface UserType {
   name: string;
   email: string;
   password: string;
+  verify: boolean;
   id: string;
 }
 
@@ -17,6 +18,7 @@ interface NewUser {
   name: string;
   email: string;
   password: string;
+  verify: boolean;
 }
 
 interface IVerification {
