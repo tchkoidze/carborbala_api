@@ -87,3 +87,22 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json(error);
   }
 };
+
+export const emailVerification = async (req: Request, res: Response) => {
+  const { hash } = req.body;
+
+  const emailVerification = await Verification.findOne({ hash });
+  if (!emailVerification) {
+    return res
+      .status(422)
+      .json({ message: "email you try to verify did not exist" });
+  }
+  const user = await User.findOne({ email: emailVerification.email });
+  if (!user) {
+    return res.status(422).json({ message: "email did not find" });
+  }
+  //user.verify = true;
+  await user.save();
+  await emailVerification.deleteOne();
+  return res.json({ message: "email verified" });
+};
