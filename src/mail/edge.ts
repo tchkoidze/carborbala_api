@@ -28,7 +28,7 @@ export const sendVerificationLink = async (
 ) => {
   const html = edge.renderSync("verify", {
     name,
-    link,
+    link: `${link}?hash=${hash}`,
   });
 
   return send(to, "Verification", html);

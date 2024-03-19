@@ -59,17 +59,18 @@ export const login = async (req: Request, res: Response) => {
     const { value, error } = validator.validate(body);
 
     if (error) {
-      return res.status(4001).json(error.details);
+      return res.status(401).json(error.details);
     }
 
     const { email, password } = value;
 
-    const user = await User.findOne({ email }, { _id: 0, _v: 0 }).select(
-      "+password"
-    );
+    const user = await User.findOne(
+      { email, verify: true },
+      { _id: 0, _v: 0 }
+    ).select("+password");
 
     if (!user) {
-      return res.status(4001).json("User with that email doesn`t exist");
+      return res.status(401).json("User with that email doesn`t exist");
     }
 
     const result = await bcrypt.compare(password, user.password);
@@ -83,6 +84,8 @@ export const login = async (req: Request, res: Response) => {
       const token = jwt.sign(sightData, process.env.JWT_SECRET!);
 
       return res.status(200).json({ ...sightData, token });
+    } else {
+      return res.status(402).json({ message: "incorrect Password" });
     }
   } catch (error) {
     return res.status(401).json(error);
@@ -102,8 +105,10 @@ export const emailVerification = async (req: Request, res: Response) => {
   if (!user) {
     return res.status(422).json({ message: "email did not find" });
   }
-  //user.verify = true;
+
+  user.verify = true;
   await user.save();
   await emailVerification.deleteOne();
+
   return res.json({ message: "email verified" });
 };

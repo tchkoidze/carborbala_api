@@ -72,3 +72,20 @@ paths:
       responses:
         "200":
           description: user loged in successfully
+  /verify:
+    post:
+      tags:
+        - Verify mail
+      requestBody:
+        description: verify email
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                hash:
+                  type: string
+      responses:
+        "200":
+          description: user verify successfully
