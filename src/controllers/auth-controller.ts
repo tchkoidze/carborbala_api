@@ -42,7 +42,7 @@ export const createUser = async (req: Request, res: Response) => {
       email,
       name,
       verificationHash,
-      "https://www.passportjs.org/packages/"
+      "http://localhost:5173/verify"
     );
 
     return res.status(200).json(newUser);
